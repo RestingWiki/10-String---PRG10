@@ -6,21 +6,18 @@ using namespace std;
 /////////////////////////
 // Function definition //
 /////////////////////////
-bool checkPalindromes(const string& line);
-void reverse(string& s, string::size_type left, string::size_type right);
+string toHexaDecimal(int n);
+char toChara(int digit);
 
 
+/////////////////
 int main() {
+
+
 	// User's input
-	string s1, s2;
+	int a = 4097;
+	cout << toHexaDecimal(a) << endl;
 
-	cout << "Input string: ";
-	getline(cin, s1);
-
-	if (checkPalindromes(s1))
-		cout << "This is a palindromes!" << endl;
-	else
-		cout << "This isn't a palindromes" << endl;
 
 
 	return 0;
@@ -30,45 +27,18 @@ int main() {
 /////////////////////////
 // Function definition //
 /////////////////////////
-bool checkPalindromes(const string& line) {
+string toHexaDecimal(int n) {
 
-	// Create a copy of the string 
-	string s2 = line;
-	
-	// Convert to uppercase
-	for (int i = 0; i < s2.length(); i++)
-	{
-		if (97 <= s2.at(i) && s2.at(i) <= 122)
-			s2.at(i) -= 32;
-	}
-	
-	// Replace special letter, whitespace
-	string::size_type wStart, wEnd;
-	string delimeter = " :',";
-	int pos = s2.find_first_of(delimeter);
-
-	while (pos != string::npos)
-	{
-		s2.erase(pos,1);
-		pos = s2.find_first_of(delimeter);
-	}
-
-	string s3 = s2;
-	// Reverse the string then compare
-	reverse(s3,0, s3.length()-1);
-
-	return (s2 == s3);
+    if (n < 16)
+		return string("") + toChara(n);
+	else
+		return toHexaDecimal(n / 16) + toChara(n % 16);
 }
-void reverse(string& s, string:: size_type left, string::size_type right) {
-	if (left >= right)
-	{
-		return;
-	}
+char toChara(int digit) {
+	if (0 <= digit && digit <= 9)
+		return (digit + '0');
 	else
 	{
-		char temp = s.at(left);
-		s.at(left) = s.at(right);
-		s.at(right) = temp;
-		reverse(s,++left,--right);
+		return (digit - 10 + 'A');
 	}
 }
